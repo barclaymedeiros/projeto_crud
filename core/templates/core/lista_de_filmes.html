@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Filmes</title>
+</head>
+<body>
+    <h2>Adicionar Filme</h2>
+    <form action="{% url 'core:salvar' %}" method="post">
+        {% csrf_token %}
+        <label for="nome">Nome do Filme:</label>
+        <input type="text" id="nome" name="nome" required>
+        <input type="submit" value="Salvar">
+    </form>
+
+    <h2>Lista de Filmes</h2>
+    <ul>
+        {% for filme in filmes %}
+        <li>
+            {{ filme.nome }}
+            <a href="{% url 'core:excluir' filme.id %}" onclick="return confirm('Tem certeza que deseja excluir este filme?')">Excluir</a>
+            <a href="{% url 'core:atualizar' filme.id %}">Atualizar</a>
+        </li>
+        {% empty %}
+        <li>Nenhum filme cadastrado.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
